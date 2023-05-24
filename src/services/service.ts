@@ -1,6 +1,6 @@
 //import firestore from 'firebase/firestore';
 //import {addDoc, collection} from 'firebase/firestore';
-import {ref, uploadBytes,} from 'firebase/storage';
+import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';
 
 import {storage} from '../config/storage';
 
@@ -16,4 +16,12 @@ async function addAudioChunk(audioFile: Blob[]){
     });
 }
 
-export {addAudioChunk};
+async function getCurrentAudioUrl(){
+    const storageRef = ref(storage, 'audios/audio.mp3');
+
+    const url = await getDownloadURL(storageRef);
+
+    return url;
+}
+
+export {addAudioChunk, getCurrentAudioUrl};
